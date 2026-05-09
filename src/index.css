@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: #00406E;
+    --color-accent: #5FCF80;
+    --color-text-main: #444444;
+    --color-bg-light: #f8fbfe;
+  }
+
+  body {
+    @apply font-sans text-gray-700 bg-white;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', sans-serif;
+    @apply text-primary font-bold;
+  }
+}
+
+@theme {
+  --color-primary: #00406E;
+  --color-accent: #5FCF80;
+  --color-bg-light: #f8fbfe;
+  
+  --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: "Raleway", ui-sans-serif, system-ui, sans-serif;
+}
