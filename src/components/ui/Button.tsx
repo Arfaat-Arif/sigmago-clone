@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, type LinkProps } from 'react-router-dom';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 interface ButtonBaseProps {
@@ -12,7 +12,7 @@ interface ButtonAsButton extends ButtonBaseProps, Omit<ButtonHTMLAttributes<HTML
   href?: never;
 }
 
-interface ButtonAsLink extends ButtonBaseProps {
+interface ButtonAsLink extends ButtonBaseProps, Omit<LinkProps, 'to' | 'className' | 'children'> {
   href: string;
 }
 
@@ -36,7 +36,7 @@ export function Button({ variant = 'primary', size = 'md', children, className =
   if ('href' in rest && rest.href) {
     const { href, ...linkProps } = rest as ButtonAsLink;
     return (
-      <Link to={href} className={classes} {...(linkProps as any)}>
+      <Link to={href} className={classes} {...linkProps}>
         {children}
       </Link>
     );

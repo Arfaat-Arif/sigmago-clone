@@ -6,7 +6,7 @@ import ContactPage from '@/pages/Contact';
 import LoginPage from '@/pages/Login';
 import NotFoundPage from '@/pages/NotFound';
 import { ROUTES } from '@/config/routes';
-import { AuthProvider } from '@/context/AuthContext';
+import { AuthProvider } from '@/context/AuthProvider';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 
 function App() {

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, LogOut, User } from 'lucide-react';
 import { navLinks } from '@/config/navigation';
 import { Container } from '@/components/ui';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,12 +18,13 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const closeMenu = () => setIsOpen(false);
+
   useEffect(() => {
-    setIsOpen(false);
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  if (!isAuthenticated && location.pathname !== '/login') return null;
+  if (!isAuthenticated && !['/login', '/signup'].includes(location.pathname)) return null;
 
   return (
     <nav
@@ -44,6 +45,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 to={link.href}
+                onClick={closeMenu}
                 className={`text-sm font-semibold uppercase tracking-wide transition-colors duration-200 hover:text-accent ${
                   location.pathname === link.href ? 'text-accent' : 'text-gray-700'
                 }`}
@@ -101,6 +103,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   to={link.href}
+                  onClick={closeMenu}
                   className={`block text-sm font-semibold uppercase tracking-wide py-2 transition-colors ${
                     location.pathname === link.href ? 'text-accent' : 'text-gray-700'
                   }`}

@@ -2,30 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LogIn, UserPlus, Mail, Lock, ShieldCheck, AlertCircle, CheckCircle2 } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/config/routes';
 import { Button } from '@/components/ui';
 
 export default function LoginPage() {
-  const [isLogin, setIsLogin] = useState(true);
+  const { login, signup, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || ROUTES.HOME;
+
+  const isLogin = location.pathname !== ROUTES.SIGNUP;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   
-  const { login, signup } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || ROUTES.HOME;
-
-  // Set isLogin based on path if needed
   useEffect(() => {
-    if (location.pathname === ROUTES.SIGNUP) {
-      setIsLogin(false);
-    } else {
-      setIsLogin(true);
+    if (isAuthenticated) {
+      navigate(from, { replace: true });
     }
-  }, [location.pathname]);
+  }, [isAuthenticated, navigate, from]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -192,7 +189,6 @@ export default function LoginPage() {
             <div className="text-center">
               <button
                 onClick={() => {
-                  setIsLogin(!isLogin);
                   setError('');
                   setSuccess('');
                   navigate(isLogin ? ROUTES.SIGNUP : ROUTES.LOGIN);
